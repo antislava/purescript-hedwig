@@ -9,7 +9,7 @@ module Hedwig.Hook
  , module Virtual
  ) where
 
-import Hedwig.Foreign (hook1, VNodeFn1, Trait)
+import Hedwig.Foreign (hook1, hook2, VNodeFn1, VNodeFn2, Trait)
 import Hedwig.Foreign (VirtualNode, VNodeFn1, VNodeFn2) as Virtual
 
 -- | Attaches a hook for vnode init (a vnode has been added)
@@ -24,8 +24,20 @@ atInsert = hook1 "insert"
 atDestroy :: forall msg. VNodeFn1 msg -> Trait msg
 atDestroy = hook1 "destroy"
 
--- TODO: create; a DOM element has been created based on a vnode; emptyVnode, vnode
--- TODO: prepatch; an element is about to be patched; oldVnode, vnode
--- TODO: update; an element is being updated; oldVnode, vnode
--- TODO: postpatch; an element has been patched; oldVnode, vnode
+-- | Attaches a hook for vnode-based DOM element creation
+atCreate :: forall msg. VNodeFn2 msg -> Trait msg
+atCreate = hook2 "create"
+
+-- | Attaches a hook for vnode element prepatch
+atPrepatch :: forall msg. VNodeFn2 msg -> Trait msg
+atPrepatch = hook2 "prepatch"
+
+-- | Attaches a hook for vnode element update
+atUpdate :: forall msg. VNodeFn2 msg -> Trait msg
+atUpdate = hook2 "update"
+
+-- | Attaches a hook for vnode element postpatch
+atPostpatch :: forall msg. VNodeFn2 msg -> Trait msg
+atPostpatch = hook2 "postpatch"
+
 -- TODO: remove; an element is directly being removed from the DOM; vnode, removeCallback

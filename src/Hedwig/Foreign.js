@@ -38,6 +38,7 @@ const STYLE = 5;
 const TRANSITION = 6;
 const TRANSITION_GROUP = 7;
 const HOOK1 = 8;
+const HOOK2 = 9;
 
 exports.attribute_ = function(name, value) {
   return [ATTRIBUTE, name, value];
@@ -83,6 +84,10 @@ exports.hook1_ = function(name, fn) {
   return [HOOK1, name, fn];
 };
 
+exports.hook2_ = function(name, fn) {
+  return [HOOK2, name, fn];
+};
+
 const call = function(send, msg, event) {
   send(msg(event)())();
 };
@@ -95,7 +100,15 @@ const unwrapEff1 = function(fn) {
   return function(vnode) {
     return fn(vnode)()
   }
-}
+};
+
+const unwrapEff2 = function(fn) {
+  return function(oldVnode) {
+    return function (newVnode) {
+      return fn(oldVnode)(newVnode)()
+    };
+  };
+};
 
 const toVnode = function(html, send) {
   if (typeof html === 'string') {
@@ -139,7 +152,12 @@ const toVnode = function(html, send) {
             break;
           case HOOK1:
             data.hook = data.hook || {};
-            data.hook[trait[1]] = unwrapEff(trait[2]);
+            data.hook[trait[1]] = unwrapEff1(trait[2]);
+            break;
+          case HOOK2:
+            data.hook = data.hook || {};
+            data.hook[trait[1]] = unwrapEff2(trait[2]);
+            break;
           case KEY:
             data.key = trait[1];
             break;
