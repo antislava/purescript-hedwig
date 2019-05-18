@@ -13,6 +13,11 @@ foreign import data Html :: Type -> Type
 
 foreign import data Trait :: Type -> Type
 
+foreign import data VirtualNode :: Type -> Type
+
+type VNodeFn1 msg = VirtualNode msg -> Effect Unit
+type VNodeFn2 msg = VirtualNode msg -> VirtualNode msg -> Effect Unit
+
 foreign import element_ :: forall msg. Fn3 String (Array (Trait msg)) (Array (Html msg)) (Html msg)
 foreign import text_ :: forall msg. Fn1 String (Html msg)
 foreign import mapHtml_ :: forall a b. Fn2 (a -> b) (Html a) (Html b)
@@ -31,8 +36,8 @@ foreign import transition_ :: forall msg. Fn1 String (Trait msg)
 foreign import transition__ :: forall msg. Fn1 TransitionOptions (Trait msg)
 foreign import transitionGroup_ :: forall msg. Fn1 String (Trait msg)
 foreign import transitionGroup__ :: forall msg. Fn1 TransitionOptions (Trait msg)
-
-foreign import data VirtualNode :: Type -> Type
+foreign import hook1_ :: forall msg. Fn2 String (VNodeFn1 msg) (Trait msg)
+-- TODO: foreign import hook2_ :: forall msg. Fn2 String (VNodeFn2 msg) (Trait msg)
 
 foreign import patch0_ :: forall msg. EffectFn3 Element (Html msg) (msg -> Effect Unit) (VirtualNode msg)
 foreign import patch_ :: forall msg. EffectFn3 (VirtualNode msg) (Html msg) (msg -> Effect Unit) (VirtualNode msg)
@@ -98,6 +103,14 @@ patch0 = runEffectFn3 patch0_
 
 patch :: forall msg. VirtualNode msg -> Html msg -> (msg -> Effect Unit) -> Effect (VirtualNode msg)
 patch = runEffectFn3 patch_
+
+-- | Attach an unary vnode function as a hook
+hook1 :: forall msg. String -> VNodeFn1 msg -> Trait msg
+hook1 = runFn2 hook1_
+
+-- -- | Attach a binary vnode function as a hook
+-- hook2 :: forall msg. String -> VNodeFn2 msg -> Trait msg
+-- hook2 = runFn2 hook2_
 
 log :: forall a. a -> Effect Unit
 log = runEffectFn1 log_
