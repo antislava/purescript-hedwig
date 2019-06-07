@@ -5,7 +5,7 @@ module Hedwig.Hook
  , atCreate
  , atPrepatch
  , atUpdate
- , atPostPatch
+ , atPostpatch
  , module Virtual
  ) where
 
@@ -37,7 +37,7 @@ atUpdate :: forall msg. VNodeFn2 msg -> Trait msg
 atUpdate = hook2 "update"
 
 -- | Attaches a hook for vnode element postpatch
-atPostPatch :: forall msg. VNodeFn2 msg -> Trait msg
-atPostPatch = hook2 "postpatch"
+atPostpatch :: forall msg. VNodeFn2 msg -> Trait msg
+atPostpatch = hook2 "postpatch"
 
 -- TODO: remove; an element is directly being removed from the DOM; vnode, removeCallback
