@@ -103,10 +103,8 @@ const unwrapEff1 = function(fn) {
 };
 
 const unwrapEff2 = function(fn) {
-  return function(oldVnode) {
-    return function (newVnode) {
-      return fn(oldVnode)(newVnode)()
-    };
+  return function(oldVnode, newVnode) {
+    return fn(oldVnode)(newVnode)()
   };
 };
 
