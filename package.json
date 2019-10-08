@@ -11,6 +11,7 @@
     "snabbdom-transition": "^0.2.0"
   },
   "devDependencies": {
+    "parcel-bundler": "^1.12.4",
     "pulp": "^12.3.0"
   }
 }

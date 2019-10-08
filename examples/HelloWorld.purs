@@ -15,6 +15,7 @@ main = do
     app = {
       init: unit :> [],
       update: \_ _ -> unit :> [],
-      view: const html
+      view: const html,
+      inputs: []
     }
   H.mount "main" app

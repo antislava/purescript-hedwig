@@ -33,5 +33,6 @@ main =
   H.mount "main" {
     init: init :> [],
     update: update,
-    view
+    view,
+    inputs: []
   }

@@ -37,4 +37,6 @@ view model = H.main [] [
 ]
 
 main :: Effect Unit
-main = H.mount "main" { init, update, view }
+main = H.mount "main" { init, update, view
+                      , inputs: []
+                      }

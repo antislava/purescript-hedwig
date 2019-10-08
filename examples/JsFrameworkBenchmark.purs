@@ -19,7 +19,9 @@ import Web.Event.Event (Event)
 import Web.Event.Event as Event
 
 main :: Effect Unit
-main = H.mount "main" { init, update, view }
+main = H.mount "main" { init, update, view
+                      , inputs: []
+                      }
 
 type Row = { id :: Int, label :: String, selected :: Boolean }
 
