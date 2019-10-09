@@ -32,7 +32,7 @@ main :: Effect Unit
 main =
   H.mount "main" {
     init: init :> [],
-    update: update,
+    update,
     view,
     inputs: []
   }
