@@ -8,7 +8,7 @@
 
 # Other: make ctags, make docs-html
 
-EXMPLS := HelloWorld Counter Dice Prompt Counters AnimatedList Affjax JsFrameworkBenchmark
+EXMPLS := HelloWorld Counter Dice Prompt Counters AnimatedList Affjax JsFrameworkBenchmark HelloSvg
 
 BLDS = $(EXMPLS:%=build-%)
 SRVS = $(EXMPLS:%=serve-%)
@@ -34,11 +34,10 @@ all-pages: $(HTMLS)
 ./examples/%-page/index.html: ./examples/%-page/parcel-index.js
 	[[ -f $@ ]] && cp $@ $@.`date -u +%Y%m%d-%H%M%S` || \
 		env name=$* shab ./examples/index-template.html > $@
-	cp -n ./examples/style-template.css $(@D)/style.css
-	cp -b -S .`date -u +%Y%m%d-%H%M%S`./examples/style-template.css $(@D)/style.css
+	cp -b -S .`date -u +%Y%m%d-%H%M%S` ./examples/style-template.css $(@D)/style.css
 
 clean-html-js-css-backups:
-	rm -f ./examples/*-page/*{html,js,css}.20*
+	rm -f ./examples/*-page/*.{html,js,css}.20*
 
 
 # Parcel wrapping
